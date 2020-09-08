@@ -1,0 +1,21 @@
+.header__wrapper{
+    position: relative;
+    background: #ffffff;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    height: 75px;
+    padding: 25px 0;
+}
+
+.header__usersData p img{
+    border-radius: 50%;
+    background: #2A5795;
+}
+.header__atHome img{
+    width: 20px;
+    height:15px;
+    margin-right: 8px;
+    margin-top: -3px;
+}

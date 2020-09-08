@@ -1,0 +1,36 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  font-size: 16px;
+  background: #FBFCFD!important;
+  overflow-x: hidden;
+}
+
+input{
+  border: none;
+  background: #F8F9FB;
+  padding: 15px;
+}
+
+.table{
+  border-radius: 15px!important;
+}
+.ant-table-cell{
+  background: none!important;
+  border-top: none!important;
+
+}
+.ant-table-content{
+  padding: 15px;
+}
+.ant-table-container,.ant-table, .ant-table-bordered,.ant-table-content{
+  border-radius: 15px!important;
+}
+
+.ant-pagination li{
+  border: none;
+  border-radius: 50%!important;
+}
