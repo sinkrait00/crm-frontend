@@ -1,0 +1,11 @@
+.crmTable{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 30px 0;
+}
+.crmTable__title{
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}

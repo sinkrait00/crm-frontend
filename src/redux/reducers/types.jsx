@@ -1,0 +1,1 @@
+export  const WRITE_SEARCH_TEXT = 'WRITE_SEARCH_TEXT'

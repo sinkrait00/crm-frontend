@@ -1,7 +1,11 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Table, Switch, Radio, Form, Space } from 'antd';
 import 'antd/dist/antd.css';
-const CRMTable : React.FunctionComponent = ()=>{
+import SearchPanel from "./SearchPanel/SearchPanel";
+import './CRMTable.css'
+import {useSelector} from "react-redux";
+const CRMTable : React.FunctionComponent = (props)=>{
+    const [searchText,setSearchText] = useState('')
 
     const columns = [
         {
@@ -58,7 +62,24 @@ const CRMTable : React.FunctionComponent = ()=>{
         loading: false,
         size: 'default',
     };
+
+     const newData= data.filter(item=>{
+         for(let key in item){
+             for(let i=)
+             return item[key].match(searchText)
+         }
+         return item.match(searchText)
+     })
+    //     for(let key in item){
+    //         if(item[key]==searchText)
+    //             return item
+    //     }
+    // })
+console.log(newData)
+console.log(searchText)
     return(
+        <div className='crmTable'>
+            <div className='crmTable__title'><h2>Пользователи</h2><SearchPanel handleSearchText={setSearchText}/></div>
         <Table
             className='table'
             {...state}
@@ -68,9 +89,11 @@ const CRMTable : React.FunctionComponent = ()=>{
                 pageSize: 5
             }}
             columns={columns}
-            dataSource={data}
+            dataSource={newData!==''? newData : data}
             //scroll={scroll}
         />
+
+        </div>
     )
 }
 
