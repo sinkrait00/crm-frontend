@@ -8,7 +8,7 @@ const Header: React.FunctionComponent = ()=>{
         <div className="container">
         <div className="header">
             <div className="header__atHome">
-            <NavLink to='/'><img src={arrowLeftSVG} alt=""/>На главную</NavLink>
+            <NavLink to='/main'><img src={arrowLeftSVG} alt=""/>На главную</NavLink>
         </div>
             <div className="header__usersData">
                 <p>Алфёров Дмитрий <img src="" alt=""/></p>

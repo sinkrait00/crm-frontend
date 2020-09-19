@@ -1,85 +1,55 @@
 import React, {useEffect, useState} from 'react'
-import { Table, Switch, Radio, Form, Space } from 'antd';
+import { Table} from 'antd';
 import 'antd/dist/antd.css';
 import SearchPanel from "./SearchPanel/SearchPanel";
 import './CRMTable.css'
-import {useSelector} from "react-redux";
-const CRMTable : React.FunctionComponent = (props)=>{
+
+import {addSVG} from "../../assets/icons";
+import {withRouter} from "react-router-dom";
+import {connect, useSelector} from "react-redux";
+import ModalWindow from "../Model/ModalWindow";
+import Loader from "../Loader/Loader";
+import {getEmployees} from "../../redux/reducers/employeeReducer";
+
+
+const CRMTable : React.FunctionComponent = ({columns,title,data,linkForCreate,history})=>{
+
+    console.log(data)
+
     const [searchText,setSearchText] = useState('')
-
-    const columns = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            sorter: (a, b) => a.Name - b.Name,
-        },
-        {
-            title: 'Age',
-            dataIndex: 'age',
-            sorter: (a, b) => a.age - b.age,
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            filters: [
-                {
-                    text: 'London',
-                    value: 'London',
-                },
-                {
-                    text: 'New York',
-                    value: 'New York',
-                },
-            ],
-            onFilter: (value, record) => record.address.indexOf(value) === 0,
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: () => (
-                <Space size="middle">
-                    <a>Delete</a>
-                    <a className="ant-dropdown-link">
-                        {/*More actions <DownOutlined />*/}
-                    </a>
-                </Space>
-            ),
-        },
-    ];
-
-    const data = [];
-    for (let i = 1; i <= 10; i++) {
-        data.push({
-            key: i,
-            name: 'John Brown',
-            age: `${i}2`,
-            address: `New York No. ${i} Lake Park`,
-            description: `My name is John Brown, I am ${i}2 years old, living in New York No. ${i} Lake Park.`,
-        });
-    }
+    const isModal = useSelector(state=>state.table.modalWindow.isOpen)
+    const isFetchLoader = useSelector(state=>state.main.isFetchLoader)
+    const [isLoader, setIsLoader]= useState('')
+    useEffect(()=>{
+        setIsLoader(isFetchLoader)
+    },[isFetchLoader])
    const state = {
 
-        loading: false,
+        loading: isLoader,
         size: 'default',
+       rowSelection: {}
     };
 
-     const newData= data.filter(item=>{
-         for(let key in item){
-             for(let i=)
-             return item[key].match(searchText)
-         }
-         return item.match(searchText)
-     })
-    //     for(let key in item){
-    //         if(item[key]==searchText)
-    //             return item
-    //     }
-    // })
-console.log(newData)
-console.log(searchText)
+     // const newData= data2.filter(item=>{
+     //     let word=''
+     //     for(let key in item){
+     //         word += item[key]
+     //     }
+     //     return word.trim().toLowerCase().match(searchText)
+     // })
+
     return(
         <div className='crmTable'>
-            <div className='crmTable__title'><h2>Пользователи</h2><SearchPanel handleSearchText={setSearchText}/></div>
+            <div className='crmTable__title'><h2>{title}</h2>
+                <div className='crmTable__searchField'>
+                    <SearchPanel handleSearchText={setSearchText}/>
+                        <div className='crmTable__recordCreator' onClick={()=>history.push(linkForCreate)}>
+                             <img
+                            src={addSVG} alt=""/>
+                        </div>
+                </div>
+            </div>
+
         <Table
             className='table'
             {...state}
@@ -88,13 +58,18 @@ console.log(searchText)
                 position: ['none','bottomCenter'],
                 pageSize: 5
             }}
+
             columns={columns}
-            dataSource={newData!==''? newData : data}
+             dataSource={ data}
             //scroll={scroll}
         />
-
+            {isModal && <ModalWindow />}
         </div>
     )
 }
-
-export default CRMTable
+const mapStateToProps = state=>{
+    return{
+       isFetchLoader: state.main.isFetchLoader
+    }
+}
+export default connect(mapStateToProps,{getEmployees})(withRouter(CRMTable))

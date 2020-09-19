@@ -28,14 +28,14 @@
     align-items: center;
     position: relative;
     background: #7663F5;
-
+    width: 450px;
 }
 .authInput img{
     width: 5%;
     height: 20px;
     margin: 0 15px;
 }
-.authInput input{
+.authInput input,.authInput textarea{
     width: 85%;
     border: none;
 }

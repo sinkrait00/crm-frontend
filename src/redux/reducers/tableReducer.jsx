@@ -1,16 +1,16 @@
-import {WRITE_SEARCH_TEXT} from './types'
+import { TOGGLE_MODAL} from './types'
 
 const initialState={
-    searchText:''
+    modalWindow: {isOpen:false,type:'delete'}
 }
 
 
 export const tableReducer = (state=initialState,action)=>{
     switch (action.type) {
-        case WRITE_SEARCH_TEXT:
+        case TOGGLE_MODAL:
             return{
                 ...state,
-                searchText: action.payload
+                modalWindow: action.payload
             }
         default:{
             return{
@@ -20,10 +20,10 @@ export const tableReducer = (state=initialState,action)=>{
     }
 }
 
-export const writeInSearchText = value=>{
+export const toggleModal = obj=>{
     return{
-        type: 'WRITE_SEARCH_TEXT',
-        payload: value
+        type:  TOGGLE_MODAL,
+        payload: obj
     }
 }
 

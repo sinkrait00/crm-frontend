@@ -1,0 +1,21 @@
+.createOrEditUserForm{
+    background:  #FBFCFD;
+    padding: 30px 15px;
+    border-radius: 25px;
+    width: 100%;
+}
+.createOrEditUserForm form{
+    display: flex;
+    flex-wrap: wrap;
+}
+.createOrEditUserForm form button{
+    border-radius: 25px;
+    border: none;
+    align-self: flex-start;
+    padding: 15px 25px;
+    background: linear-gradient(20deg, rgba(188,94,224,1) 15%, rgba(226,88,212,1) 70%);
+    color: #ffffff;
+}
+.divider{
+    margin: 30px;
+}

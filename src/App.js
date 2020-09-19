@@ -5,19 +5,22 @@ import MainPage from './pages/MainPage/MainPage'
 import './App.css';
 import AuthPage from "./pages/Auth/AuthPage";
 import UsersPage from "./pages/UsersPage/UsersPage";
+import CreateOrEditUserContainer from "./components/Users/CreateOrEditUserContainer";
+import ProvidersPage from "./pages/ProvidersPage/ProvidersPage";
 
 
 const App: React.FC = ()=>{
   return(
+<>
 
-    <Switch >
-  <Route path={'/'} exact component={MainPage} />
-      <Route path={'/sign-in'} exact component={AuthPage}/>
-      <Route path={'/users'} exact component={UsersPage} />
+  <Route path={'/main'} exact component={MainPage} />
+      <Route path={'/'} exact component={AuthPage}/>
+      <Route path={'/users'}  component={UsersPage} />
       <Route path={'/chat'} exact component={MainPage} />
       <Route path={'/files'} exact component={MainPage} />
-      <Route path={'/providers'} exact component={MainPage} />
-    </Switch>
+      <Route path={'/providers'}  component={ProvidersPage} />
+
+</>
   )
 }
 

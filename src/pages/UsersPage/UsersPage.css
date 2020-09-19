@@ -1,9 +1,10 @@
-.usersTableSection{
+.tableSection{
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     width: 100%;
-    background: #FBFCFD;
+    /*background: #FBFCFD;*/
+    background: #2B2B2B;
     /*background: linear-gradient(20deg, rgba(188,94,224,1) 15%, rgba(226,88,212,1) 70%);*/
 }
