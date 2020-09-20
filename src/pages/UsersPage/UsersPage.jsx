@@ -6,14 +6,14 @@ import {Route, Switch} from "react-router-dom";
 import CreateOrEditUserContainer from "../../components/Users/CreateOrEditUserContainer";
 import {UserColumns} from "../../components/Table/Columns";
 import {connect} from "react-redux";
-import {getEmployees} from "../../redux/reducers/employeeReducer";
+import {getUsers} from "../../redux/reducers/usersReducer";
 import Loader from "../../components/Loader/Loader";
 
 const UsersPage = (props)=>{
     useEffect(()=>{
-        props.getEmployees()
+        props.getUsers()
     },[])
-    const data = props.employees.map(item=>{
+    const data = props.users.map(item=>{
         return{
             key: item.id,
             full_name: item.full_name,
@@ -51,7 +51,7 @@ const UsersPage = (props)=>{
 const mapStateToProps = state=>{
     return{
         isFetchLoader: state.main.isFetchLoader,
-        employees: state.employee.employees
+        users: state.users.users
     }
 }
-export  default  connect(mapStateToProps,{getEmployees})(UsersPage)
+export  default  connect(mapStateToProps,{getUsers})(UsersPage)

@@ -1,10 +1,12 @@
 import {combineReducers} from "redux";
 import {tableReducer} from './tableReducer'
 import {mainReducer} from "./mainReducer";
-import {employeeReducer} from "./employeeReducer";
+import {usersReducer} from "./usersReducer";
+import {providerReducer} from "./providerReducer";
 
 export const rootReducer = combineReducers({
     main: mainReducer,
     table: tableReducer,
-    employee: employeeReducer
+    users: usersReducer,
+    providers: providerReducer
 })

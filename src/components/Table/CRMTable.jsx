@@ -9,7 +9,6 @@ import {withRouter} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import ModalWindow from "../Model/ModalWindow";
 import Loader from "../Loader/Loader";
-import {getEmployees} from "../../redux/reducers/employeeReducer";
 
 
 const CRMTable : React.FunctionComponent = ({columns,title,data,linkForCreate,history})=>{
@@ -72,4 +71,4 @@ const mapStateToProps = state=>{
        isFetchLoader: state.main.isFetchLoader
     }
 }
-export default connect(mapStateToProps,{getEmployees})(withRouter(CRMTable))
+export default connect(mapStateToProps)(withRouter(CRMTable))

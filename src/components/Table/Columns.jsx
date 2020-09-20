@@ -75,8 +75,8 @@ export  const VendorColumns =[
     },
     {
         title: 'Адрес склада',
-        dataIndex: 'warehouse_address',
-        sorter: (a, b) => a.warehouse_address > b.warehouse_address,
+        dataIndex: 'warehouse',
+        sorter: (a, b) => a.warehouse > b.warehouse,
     },
     {
         title: 'E-mail',
