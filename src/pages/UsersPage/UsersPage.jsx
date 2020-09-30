@@ -6,12 +6,12 @@ import {Route, Switch} from "react-router-dom";
 import CreateOrEditUserContainer from "../../components/Users/CreateOrEditUserContainer";
 import {UserColumns} from "../../components/Table/Columns";
 import {connect} from "react-redux";
-import {getUsers} from "../../redux/reducers/usersReducer";
-import Loader from "../../components/Loader/Loader";
+import {getRoles, getUsers} from "../../redux/reducers/usersReducer";
 
 const UsersPage = (props)=>{
     useEffect(()=>{
         props.getUsers()
+        props.getRoles()
     },[])
     const data = props.users.map(item=>{
         return{
@@ -31,7 +31,7 @@ const UsersPage = (props)=>{
                     <Switch>
                     <Route path={props.match.path} exact  render={()=>{
                         return(
-                            props.isFetchLoader ? <Loader />:
+
                         <CRMTable
                             title={'Пользователи'}
                             linkForCreate={`${props.match.path}/create-users`}
@@ -40,8 +40,13 @@ const UsersPage = (props)=>{
                             />
                         )
                     }} />
-                    <Route path={`${props.match.path}/create-users`}  exact  render={()=><CreateOrEditUserContainer title={'Создание пользователя'} loadData={0}/>} />
-                    <Route path={`${props.match.path}/edit-users`}  exact  render={()=><CreateOrEditUserContainer title={'Изменение пользователя'} loadData={1}/>} />
+                    <Route path={`${props.match.path}/create-users`}  exact  render={()=><CreateOrEditUserContainer title={'Создание пользователя'} roles={props.roles} loadData={0}/>} />
+                    <Route path={`${props.match.path}/edit-users/:user_id`}  exact  render={()=><CreateOrEditUserContainer
+                        title={'Изменение пользователя'}
+                        loadData={1}
+                        roles={props.roles}
+                        users={props.users}
+                    />} />
                     </Switch>
                     </div>
             </div>
@@ -51,7 +56,8 @@ const UsersPage = (props)=>{
 const mapStateToProps = state=>{
     return{
         isFetchLoader: state.main.isFetchLoader,
-        users: state.users.users
+        users: state.users.users,
+        roles: state.users.roles
     }
 }
-export  default  connect(mapStateToProps,{getUsers})(UsersPage)
+export  default  connect(mapStateToProps,{getUsers,getRoles})(UsersPage)

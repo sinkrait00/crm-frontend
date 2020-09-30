@@ -20,6 +20,9 @@ import productSVG from './product.svg'
 import locationSVG from './location.svg'
 import warehouseSVG from './storage.svg'
 import descriptionSVG from './hastag.svg'
+import instructionSVG from './information.svg'
+import filterSVG from './settings.svg'
+import tagSVG from './tag.svg'
 export {
     providerSVG,webSVG,
     documentSVG,userSVG,
@@ -29,9 +32,9 @@ export {
     mailSVG,locationSVG,
     lockSVG,warehouseSVG,
     authArrow,descriptionSVG,
-    searchSVG,
-    addSVG,
-    phoneSVG,
+    searchSVG,instructionSVG,
+    addSVG,filterSVG,
+    phoneSVG,tagSVG,
     nameSVG,
     roleSVG,
     positionSVG

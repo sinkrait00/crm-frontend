@@ -12,18 +12,15 @@ const CreateOrEditUserForm = (props)=>{
         position: '',
         role: '',
         password: ''}
-    // if(props.data?.length===0){
-    //     title="Добавление пользователя"
-    //     initialVals={ name: '',
-    //         email: '',
-    //         phone: '',
-    //         position: '',
-    //         permission: '',
-    //         password: ''}
-    // }else{
-    //     title="Редактирование пользователя"
-    //
-    // }
+   if(props.loadData===1){
+       initialVals={
+           full_name: props.data.full_name,
+           email: props.data.email,
+           phone: props.data.phone,
+           position: props.data.position,
+           role: props.data.role,
+           password: ''}
+   }
     return(
         <div className='createOrEditUserForm'>
             <h2>{props.title}</h2>
@@ -44,6 +41,7 @@ const CreateOrEditUserForm = (props)=>{
             password: Yup.string()
                 .required('Введите пароль')
         })}
+            onSubmit={(values => props.submitHandler(values))}
             >
         <Form>
             <div className='divider'>
@@ -71,7 +69,17 @@ const CreateOrEditUserForm = (props)=>{
             </div>
             <div className="authInput">
                 <img src={roleSVG} alt=""/>
-                <Field name="role" placeholder="Роль"/>
+                <Field name="role" placeholder="Роль" as={'select'}>
+                    <option value=""  hidden>
+                        Выбор роли
+                    </option>
+                    {props.roles.map(item=> {
+
+                        return (
+                            <option key={item} value={item}>{item}</option>
+                        )})
+                    }
+                </Field>
                 <span  className='authError'><ErrorMessage name="role"/></span>
             </div>
             <div className="authInput">

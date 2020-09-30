@@ -9,58 +9,71 @@ import {withRouter} from "react-router-dom";
 import {connect, useSelector} from "react-redux";
 import ModalWindow from "../Model/ModalWindow";
 import Loader from "../Loader/Loader";
+import {roleChecker} from "../Auth/roleChecker";
+import {toggleLoader} from "../../redux/reducers/mainReducer";
+import {tableDataSorter} from "./tableDataSorter";
 
 
-const CRMTable : React.FunctionComponent = ({columns,title,data,linkForCreate,history})=>{
+const CRMTable : React.FunctionComponent = ({columns,title,data,linkForCreate,history,role,favRows})=>{
 
-    console.log(data)
+
 
     const [searchText,setSearchText] = useState('')
     const isModal = useSelector(state=>state.table.modalWindow.isOpen)
     const isFetchLoader = useSelector(state=>state.main.isFetchLoader)
     const [isLoader, setIsLoader]= useState('')
+
+
+    const filteredColumns = ()=>{
+        if(role==='superadmin' || role==='admin' || role==='employee'){
+            return columns
+        }
+        return columns.slice(0,columns.length-1)
+    }
+    let tableState = {
+        className: 'table',
+        loading: isLoader,
+        pagination:{
+            position: ['none','bottomCenter'],
+            pageSize: 5
+        },
+        dataSource: tableDataSorter(data,searchText),
+        columns: filteredColumns()
+    }
+
+        if (favRows){
+            tableState.rowSelection=favRows
+        }
+
     useEffect(()=>{
         setIsLoader(isFetchLoader)
     },[isFetchLoader])
-   const state = {
 
-        loading: isLoader,
-        size: 'default',
-       rowSelection: {}
-    };
 
-     // const newData= data2.filter(item=>{
-     //     let word=''
-     //     for(let key in item){
-     //         word += item[key]
-     //     }
-     //     return word.trim().toLowerCase().match(searchText)
-     // })
+
+
+
 
     return(
         <div className='crmTable'>
             <div className='crmTable__title'><h2>{title}</h2>
                 <div className='crmTable__searchField'>
-                    <SearchPanel handleSearchText={setSearchText}/>
+                        <SearchPanel handleSearchText={setSearchText}/>
+
+
+                    {role==='superadmin' || role==='admin' || role==='employee' ?
                         <div className='crmTable__recordCreator' onClick={()=>history.push(linkForCreate)}>
                              <img
                             src={addSVG} alt=""/>
                         </div>
+                        : <></>}
+
                 </div>
             </div>
 
         <Table
-            className='table'
-            {...state}
-            pagination={
-                {
-                position: ['none','bottomCenter'],
-                pageSize: 5
-            }}
+            {...tableState}
 
-            columns={columns}
-             dataSource={ data}
-            //scroll={scroll}
         />
             {isModal && <ModalWindow />}
         </div>
@@ -68,7 +81,8 @@ const CRMTable : React.FunctionComponent = ({columns,title,data,linkForCreate,hi
 }
 const mapStateToProps = state=>{
     return{
-       isFetchLoader: state.main.isFetchLoader
+       isFetchLoader: state.main.isFetchLoader,
+        role: state.main.isAuthorized.role
     }
 }
 export default connect(mapStateToProps)(withRouter(CRMTable))

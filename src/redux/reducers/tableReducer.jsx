@@ -1,7 +1,7 @@
 import { TOGGLE_MODAL} from './types'
 
 const initialState={
-    modalWindow: {isOpen:false,type:'delete'}
+    modalWindow: {} //{isOpen:false,type:'DELETE',data:{ 'typeRow,''id'}}
 }
 
 

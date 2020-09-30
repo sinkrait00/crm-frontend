@@ -2,8 +2,9 @@ import React from 'react'
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from 'yup';
 import {lockSVG, mailSVG,authArrow} from '../../assets/icons'
+import Loader from "../Loader/Loader";
 
-const AuthForm: React.FunctionComponent = ()=>{
+const AuthForm: React.FunctionComponent = (props)=>{
     return(
         <Formik
             initialValues={{
@@ -17,7 +18,7 @@ const AuthForm: React.FunctionComponent = ()=>{
                 password: Yup.string()
                     .required('Введите пароль')
             })}
-            //onSubmit={}
+            onSubmit={values=>props.handlerSubmit(values)}
 >
 <Form>
 <div className="authInput">
@@ -30,7 +31,7 @@ const AuthForm: React.FunctionComponent = ()=>{
         <Field name="password" placeholder="Пароль"/>
         <span  className='authError'><ErrorMessage name="password" /></span>
     </div>
-    <button className="authBtn" type="submit"><img src={authArrow} alt=""/><span>Войти</span></button>
+    {props.loader? <Loader />:<button className="authBtn" type="submit"><img src={authArrow} alt=""/><span>Войти</span></button>}
 </Form>
         </Formik>
     )

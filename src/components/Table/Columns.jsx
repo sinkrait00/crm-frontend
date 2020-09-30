@@ -7,49 +7,65 @@ import {toggleModal} from "../../redux/reducers/tableReducer";
 
 
 
-
-
 const ColumnActions = withRouter((props)=>{
     const ref= props.match.path.slice(1,props.location.pathname.length)
     const dispatch = useDispatch()
     const openModal = useCallback(()=>{
-        dispatch(toggleModal({isOpen: true,type: 'DELETE'}))
+        dispatch(toggleModal({
+            isOpen: true,
+            type: 'DELETE',
+            data:{
+            typeRow: ref,
+            id: props.row.key}
+        }))
     },[dispatch])
     return(
         <Space size="middle">
-            <Link to={`/${ref}/edit-${ref}`}>Изменить</Link>
+            <span onClick={()=>props.history.push(`/${ref}/edit-${ref}/${props.row.key}`)}>Изменить</span>
             <span onClick={()=>openModal()}>Удалить</span>
         </Space>
+
     )
 })
 
 
 
+export const FilterColumns =[
+    {
+        title: "Название",
+        dataIndex: 'title',
+        sorter: (a, b) => a.full_name > b.full_name
+    },
+    {
+        title: 'Действие',
+        key: 'action',
+        render: (row) => <ColumnActions row={row}/>,
+    },
+]
 
 
-
-
+const columnSorter = (x,y)=>(x< y)? -1 : (x>y)? 1 : 0
 
 export  const UserColumns =[
     {
         title: 'ФИО',
         dataIndex: 'full_name',
-        sorter: (a, b) => a.full_name > b.full_name,
+        sorter: (a,b)=>columnSorter(a.full_name,b.full_name),
     },
     {
         title: 'Роль',
         dataIndex: 'role',
-        sorter: (a, b) => a.role > b.role,
+        sorter: (a,b)=>columnSorter(a.role,b.role),
     },
     {
         title: 'Должность',
         dataIndex: 'position',
-        sorter: (a, b) => a.position > b.position,
+        sorter: (a,b)=>columnSorter(a.position,b.position)
     },
     {
         title: 'E-mail',
         dataIndex: 'email',
-        sorter: (a, b) => a.email > b.email,
+        sorter: (a, b) => columnSorter(a.email,b.email),
     },
     {
         title: 'Телефон',
@@ -58,7 +74,7 @@ export  const UserColumns =[
     {
         title: 'Действие',
         key: 'action',
-        render: () => <ColumnActions/>,
+        render: (row) => <ColumnActions row={row}/>,
     },
 ]
 
@@ -66,31 +82,33 @@ export  const VendorColumns =[
     {
         title: 'Компания',
         dataIndex: 'company',
-        sorter: (a, b) => a.company > b.company,
+        sorter: (a, b) => columnSorter(a.company,b.company),
     },
     {
         title: 'Менеджер',
         dataIndex: 'manager',
-        sorter: (a, b) => a.manager > b.manager,
+        sorter: (a, b) => columnSorter(a.manager,b.manager),
     },
     {
         title: 'Адрес склада',
         dataIndex: 'warehouse',
-        sorter: (a, b) => a.warehouse > b.warehouse,
+        sorter: (a, b) =>  columnSorter(a.warehouse,b.warehouse),
     },
     {
         title: 'E-mail',
         dataIndex: 'email',
-        sorter: (a, b) => a.email > b.email,
+        sorter: (a, b) =>  columnSorter(a.email,b.email),
+        render: (value)=><a href={`mailto:${value}`}>{value}</a>
     },
     {
         title: 'Телефон',
         dataIndex: 'phone',
+        render: (value)=><a href={`tel:${value}`}>{value}</a>
     },
     {
         title: 'Действие',
         key: 'action',
-        render: () =>  <ColumnActions/>,
+        render: (row) => <ColumnActions row={row}/>
     },
 ]
 

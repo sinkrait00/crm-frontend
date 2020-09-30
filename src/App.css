@@ -16,7 +16,7 @@ button:hover{
   transform: scale(1.05);
   transition: .15s ease;
 }
-input{
+input,textarea,select{
   border: none;
   background: #F8F9FB;
   padding: 15px;
